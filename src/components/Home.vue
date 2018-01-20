@@ -10,7 +10,7 @@
               <a class="navbar-item" href="https://github.com/marlonfurtado" target="_blank">
                 About
               </a>
-              <a class="navbar-item">
+              <a @click="logout" class="navbar-item">
                 Logout
               </a>
             </div>
@@ -39,7 +39,17 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'home',
+  data: () => {
+    return {}
+  },
+  methods: {
+    logout: function () {
+      this.$router.replace('login')
+    }
+  }
+}
 </script>
 
 <style>

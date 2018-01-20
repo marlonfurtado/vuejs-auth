@@ -22,7 +22,7 @@
     </div>
     <div class="field">
       <p class="control">
-        <button class="button is-medium is-outlined">
+        <button @click="login" class="button is-medium is-outlined">
           Login
         </button>
       </p>
@@ -39,7 +39,11 @@ export default {
   data: () => {
     return {}
   },
-  methods: {}
+  methods: {
+    login: function () {
+      this.$router.replace('home')
+    }
+  }
 }
 </script>
 
