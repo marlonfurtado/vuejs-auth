@@ -1,6 +1,6 @@
 # vuejs-auth
 
-> A proof of concept with VueJS, Firebase and Nodejs API to auth
+> A proof of concept with VueJS and Firebase to auth
 
 ## Build Setup
 
@@ -18,4 +18,6 @@ npm run build
 npm run build --report
 ```
 
-For more about VueJS, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#
+For more info about VueJS, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).  
+Adapted from this [tutorial](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c)
