@@ -6,7 +6,7 @@
 
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" v-model="email" type="email" placeholder="Email">
+        <input class="input is-medium" v-model="email" type="email" placeholder="Email" required>
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -14,7 +14,7 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" v-model="password" type="password" placeholder="Password">
+        <input class="input is-medium" v-model="password" type="password" placeholder="Password" required>
         <span class="icon is-small is-left">
           <i class="fas fa-lock"></i>
         </span>
@@ -54,16 +54,9 @@ export default {
   },
   methods: {
     signUp: function() {
-      console.log('signUp... ')
-      const email = this.email
-      const password = this.password
-      console.log(email)
-      console.log(password)
-      
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        console.log(user)
-        alert('Your account has been created!')
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      .then(() => {
+        this.$router.replace('home')
       })
       .catch((err) => {
         console.log(err)

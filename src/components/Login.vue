@@ -6,7 +6,7 @@
 
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" type="email" placeholder="Email">
+        <input class="input is-medium" v-model="email" type="email" placeholder="Email" required>
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -14,7 +14,7 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" type="password" placeholder="Password">
+        <input class="input is-medium" v-model="password" type="password" placeholder="Password" required>
         <span class="icon is-small is-left">
           <i class="fas fa-lock"></i>
         </span>
@@ -22,7 +22,7 @@
     </div>
     <div class="field">
       <p class="control">
-        <button @click="login" class="button is-medium is-outlined">
+        <button @click="signIn" class="button is-medium is-outlined">
           Login
         </button>
       </p>
@@ -34,14 +34,25 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'login',
   data: () => {
-    return {}
+    return {
+      email: '',
+      password: ''
+    }
   },
   methods: {
-    login: function () {
-      this.$router.replace('home')
+    signIn: function () {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+      .then(() => {
+        this.$router.replace('home')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }
 }
