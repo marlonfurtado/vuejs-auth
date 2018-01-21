@@ -6,7 +6,7 @@
 
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" type="email" placeholder="Email">
+        <input class="input is-medium" v-model="email" type="email" placeholder="Email">
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -14,13 +14,13 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input is-medium" type="password" placeholder="Password">
+        <input class="input is-medium" v-model="password" type="password" placeholder="Password">
         <span class="icon is-small is-left">
           <i class="fas fa-lock"></i>
         </span>
       </p>
     </div>
-    <div class="field">
+    <div class="field is-hidden">
       <p class="control has-icons-left">
         <input class="input is-medium" type="password" placeholder="Repeat the password">
         <span class="icon is-small is-left">
@@ -30,7 +30,7 @@
     </div>
     <div class="field">
       <p class="control">
-        <button class="button is-medium is-outlined">
+        <button @click="signUp" class="button is-medium is-outlined">
           Sign Up
         </button>
       </p>
@@ -42,12 +42,34 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'signup',
   data: () => {
-    return {}
+    return {
+      email: '',
+      password: ''
+    }
   },
-  methods: {}
+  methods: {
+    signUp: function() {
+      console.log('signUp... ')
+      const email = this.email
+      const password = this.password
+      console.log(email)
+      console.log(password)
+      
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        console.log(user)
+        alert('Your account has been created!')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  }
 }
 </script>
 
