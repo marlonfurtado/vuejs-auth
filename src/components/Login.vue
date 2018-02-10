@@ -4,30 +4,54 @@
   <div class="container login">
     <h3 class="title">Sign In</h3>
 
-    <div class="field">
-      <p class="control has-icons-left">
-        <input class="input is-medium" v-model="email" type="email" placeholder="Email" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left">
-        <input class="input is-medium" v-model="password" type="password" placeholder="Password" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <button @click="signIn" class="button is-medium is-outlined">
-          Login
-        </button>
-      </p>
-    </div>
+    <form name="form" @submit.prevent="validate">
+      <!-- Email -->
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input name="email" type="email" placeholder="Email"
+                class="input is-medium"
+                :class="{'is-danger':errors.has('email')}"
+                v-model="email"
+                v-validate="'required|email'">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <!-- Error -->
+          <span v-show="errors.has('email')" class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <p v-show="errors.has('email')" class="help is-danger">{{errors.first('email') }}</p>
+        </div>
+      </div>
 
+      <!-- Password -->
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input name="password" type="password" placeholder="Password" 
+                class="input is-medium"
+                :class="{'is-danger':errors.has('password')}"
+                v-model="password" 
+                v-validate="'required|min:6'">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+          <!-- Error -->
+          <span v-show="errors.has('password')" class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+          <p v-show="errors.has('password')" class="help is-danger">{{errors.first('password') }}</p>
+        </div>
+      </div>
+
+      <!-- Login -->
+      <div class="field">
+        <p class="control">
+          <button type="submit" class="button is-medium is-outlined">
+            Login
+          </button>
+        </p>
+      </div>
+    </form>
     <p class="subtitle is-6 txt-account">You don't have an account? You can <router-link to="/signup">create one!</router-link></p>
   </div>
 </div>
@@ -51,10 +75,20 @@ export default {
         this.$router.replace('home')
       })
       .catch((err) => {
-        console.log(err)
+        console.error(err.message)
+      })
+    },
+    validate: function () {
+      this.$validator.validateAll()
+      .then((result) => {
+        if (result) this.signIn()
+        return
+      })
+      .catch((err) => { 
+        console.error(err.message)
       })
     }
-  }
+  },
 }
 </script>
 
