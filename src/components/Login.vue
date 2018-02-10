@@ -3,8 +3,8 @@
   <img src="../assets/logo.png">
   <div class="container login">
     <h3 class="title">Sign In</h3>
-
-    <form name="form" @submit.prevent="validate">
+    <error-notification v-show="errorCode||errorMessage" :code="errorCode" :message="errorMessage"></error-notification>
+    <form name="form" @submit.prevent="validate" novalidate>
       <!-- Email -->
       <div class="field">
         <div class="control has-icons-left has-icons-right">
@@ -59,13 +59,19 @@
 
 <script>
 import firebase from 'firebase'
+import ErrorNotification from './ErrorNotification'
 
 export default {
   name: 'login',
+  components: {
+    ErrorNotification
+  },
   data: () => {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorCode: null,
+      errorMessage: null
     }
   },
   methods: {
@@ -75,7 +81,8 @@ export default {
         this.$router.replace('home')
       })
       .catch((err) => {
-        console.error(err.message)
+        this.errorCode = err.code
+        this.errorMessage = err.message
       })
     },
     validate: function () {
